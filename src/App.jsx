@@ -31,7 +31,7 @@ function App() {
           </Routes>
         </div>
         <div className="cart">
-          <Cart />
+          <Cart setOpenCart={setOpenCart} />
         </div>
         <div className="footer">
 

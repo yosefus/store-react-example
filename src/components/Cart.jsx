@@ -5,7 +5,7 @@ import AddToCartButton from '../components/AddToCartButton';
 import { CartContext } from '../App';
 
 
-const Cart = () => {
+const Cart = ({ setOpenCart }) => {
    const [cart] = useContext(CartContext);
    const [totalPrice, totalProducts] = cart.reduce((prev, curr) => [prev[0] + (curr.price * curr.quantity), prev[1] + curr.quantity], [0, 0])
 
@@ -31,7 +31,7 @@ const Cart = () => {
                      <li >
                         <p>total price: ${totalPrice}</p>
                         <p>items in cart: {totalProducts}</p>
-                        <Link to='/order' >
+                        <Link to='/order' onClick={() => setOpenCart()} >
                            <div className='placeOrder'>
                               place order
                            </div>
