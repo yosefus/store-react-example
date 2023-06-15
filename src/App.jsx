@@ -7,30 +7,32 @@ import Categories from './pages/Categories'
 import ItemsByCategory from './pages/ItemsByCategory'
 import SingleItem from './pages/SingleItem'
 import Order from './pages/Order'
-
 import Cart from './components/Cart'
 
 export const CartContext = createContext()
 function App() {
   const [cart, setCart] = useState([])
   const [openCart, setOpenCart] = useState(false)
-
+  const productsInCart = cart.reduce((prev, curr) => prev + curr.quantity, 0)
+  console.log(productsInCart);
   return (
     <CartContext.Provider value={[cart, setCart]} >
 
       <div className={`layout  ${openCart ? 'openCart' : ''}`}>
-        <div className="header">
+        <div className="header" onClick={() => setOpenCart()}>
           <NavLink to={'/'}> <AiOutlineHome /> </NavLink>
         </div>
-        <div className="main">
-          <Routes>
-            <Route index element={<Categories />} />
-            <Route path='/category/:category' element={<ItemsByCategory />} />
-            <Route path='/items/:id' element={<SingleItem />} />
-            <Route path='/order' element={<Order />} />
-          </Routes>
+        <div className="main slide-in-right">
+          <div className="container">
+            <Routes>
+              <Route index element={<Categories />} />
+              <Route path='/category/:category' element={<ItemsByCategory />} />
+              <Route path='/items/:id' element={<SingleItem />} />
+              <Route path='/order' element={<Order />} />
+            </Routes>
+          </div>
         </div>
-        <div className="cart">
+        <div className="cart slide-in-left">
           <Cart setOpenCart={setOpenCart} />
         </div>
         <div className="footer">
@@ -39,7 +41,8 @@ function App() {
       </div>
 
       <div className="cartIcon" onClick={() => setOpenCart(old => !old)}>
-        <AiOutlineShoppingCart />
+        <div> <AiOutlineShoppingCart /><span>{productsInCart}</span></div>
+
       </div>
     </CartContext.Provider>
   )
